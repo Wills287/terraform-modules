@@ -36,7 +36,7 @@ variable "ami" {
 variable "instance_type" {
   description = "The type of EC2 Instances to run (e.g. t3.micro)"
   type = string
-  default = "tc.micro"
+  default = "t3.micro"
 }
 
 variable "server_port" {
