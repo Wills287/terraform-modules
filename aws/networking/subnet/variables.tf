@@ -71,11 +71,6 @@ variable "cidr_block" {
   type = string
 }
 
-variable "max_subnet_count" {
-  description = "Sets the maximum amount of subnets to deploy. 0 will deploy a subnet for every provided availablility zone (in 'availability_zones' variable) within the region"
-  default = 0
-}
-
 variable "availability_zones" {
   description = "List of Availability Zones where subnets will be created"
   type = list(string)
@@ -84,6 +79,12 @@ variable "availability_zones" {
 /* ---------------------------------------------------------------------------------------------------------------------
   OPTIONAL VARIABLES
 --------------------------------------------------------------------------------------------------------------------- */
+
+variable "max_subnet_count" {
+  description = "Sets the maximum amount of subnets to deploy. 0 will deploy a subnet for every provided availablility zone (in 'availability_zones' variable) within the region"
+  type = number
+  default = 0
+}
 
 variable "public_map_public_ip" {
   description = "Indicates that instances launched into public subnets should be assigned a public IP address"
