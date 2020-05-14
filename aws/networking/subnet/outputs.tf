@@ -39,7 +39,7 @@ output "availability_zones" {
 }
 
 output "az_subnet_ids" {
-  description = "Map of AZ names to subnet Ids"
+  description = "Map of AZ names to subnet ids"
   value = zipmap(
   var.availability_zones,
   coalescelist(aws_subnet.private.*.id, aws_subnet.public.*.id)

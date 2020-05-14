@@ -10,6 +10,3 @@ data "aws_internet_gateway" "igw" {
     ]
   }
 }
-
-data "aws_availability_zones" "azs" {
-}

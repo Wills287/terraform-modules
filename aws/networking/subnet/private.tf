@@ -8,14 +8,14 @@ module "private_metadata" {
   service = var.service
   delimiter = var.delimiter
   attributes = compact(concat(var.attributes, [
-    "private"]
-  ))
+    "private"
+  ]))
   tags = var.tags
 }
 
 locals {
   private_type = "Private"
-  private_count = var.enabled ? var.max_subnet_count == 0 ? length(data.aws_availability_zones.azs.names) : var.max_subnet_count : 0
+  private_count = var.enabled ? length(var.availability_zones) : 0
 }
 
 resource "aws_subnet" "private" {

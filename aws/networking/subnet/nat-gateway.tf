@@ -14,7 +14,7 @@ module "nat_metadata" {
 }
 
 locals {
-  ngw_count = var.enabled && var.nat_gateway_enabled ? var.max_subnet_count == 0 ? length(data.aws_availability_zones.azs.names) : var.max_subnet_count : 0
+  ngw_count = var.enabled && var.nat_gateway_enabled ? length(var.availability_zones) : 0
 }
 
 resource "aws_eip" "default" {
