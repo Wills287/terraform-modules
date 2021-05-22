@@ -22,7 +22,13 @@ resource "aws_subnet" "public" {
   count = local.public_count
   vpc_id = var.vpc_id
   availability_zone = element(var.availability_zones, count.index)
-  cidr_block = cidrsubnet(var.cidr_block, ceil(log(local.public_count, 2)), count.index)
+  
+  cidr_block = cidrsubnet(
+    signum(length(var.cidr_block)) == 1 ? var.cidr_block : join("", data.aws_vpc.vpc.*.cidr_block),
+    ceil(log(local.public_subnet_count * 2, 2)),
+    local.public_count + count.index
+  )
+
   map_public_ip_on_launch = var.public_map_public_ip
 
   tags = merge(module.public_metadata.tags, {
