@@ -1,5 +1,5 @@
 module "public_metadata" {
-  source = "git::https://github.com/Wills287/terraform-modules//aws/general/metadata?ref=v0.0.5"
+  source = "git::https://github.com/Wills287/terraform-modules//aws/general/metadata?ref=v0.0.11"
 
   enabled = var.enabled
   namespace = var.namespace
