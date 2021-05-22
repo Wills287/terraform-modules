@@ -25,7 +25,7 @@ resource "aws_subnet" "public" {
   
   cidr_block = cidrsubnet(
     signum(length(var.cidr_block)) == 1 ? var.cidr_block : join("", data.aws_vpc.vpc.*.cidr_block),
-    ceil(log(local.public_subnet_count * 2, 2)),
+    ceil(log(local.public_count * 2, 2)),
     local.public_count + count.index
   )
 
