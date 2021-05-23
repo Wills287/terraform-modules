@@ -334,6 +334,36 @@ variable "cpu_utilization_low_statistic" {
   default     = "Average"
 }
 
+variable "wait_for_capacity_timeout" {
+  type        = string
+  description = "A maximum duration that Terraform should wait for ASG instances to be healthy before timing out. Setting this to '0' causes Terraform to skip all Capacity Waiting behavior"
+  default     = "10m"
+}
+
+variable "min_elb_capacity" {
+  type        = number
+  description = "Setting this causes Terraform to wait for this number of instances to show up healthy in the ELB only on creation. Updates will not wait on ELB instance number changes"
+  default     = 0
+}
+
+variable "wait_for_elb_capacity" {
+  type        = number
+  description = "Setting this will cause Terraform to wait for exactly this number of healthy instances in all attached load balancers on both create and update operations. Takes precedence over `min_elb_capacity` behavior"
+  default     = 0
+}
+
+variable "protect_from_scale_in" {
+  type        = bool
+  description = "Allows setting instance protection. The autoscaling group will not select instances with this setting for terminination during scale in events"
+  default     = false
+}
+
+variable "service_linked_role_arn" {
+  type        = string
+  description = "The ARN of the service-linked role that the ASG will use to call other AWS services"
+  default     = ""
+}
+
 variable "mixed_instances_policy" {
   description = "Policy to use mixed groups of on demand/spot of differing types. Launch template is automatically generated. https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html#mixed_instances_policy-1"
 

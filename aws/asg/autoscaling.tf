@@ -9,7 +9,7 @@ resource "aws_autoscaling_policy" "scale_up" {
   adjustment_type        = var.scale_up_adjustment_type
   policy_type            = var.scale_up_policy_type
   cooldown               = var.scale_up_cooldown_seconds
-  autoscaling_group_name = join("", aws_autoscaling_group.default.*.name)
+  autoscaling_group_name = join("", aws_autoscaling_group.this.*.name)
 }
 
 resource "aws_autoscaling_policy" "scale_down" {
@@ -19,7 +19,7 @@ resource "aws_autoscaling_policy" "scale_down" {
   adjustment_type        = var.scale_down_adjustment_type
   policy_type            = var.scale_down_policy_type
   cooldown               = var.scale_down_cooldown_seconds
-  autoscaling_group_name = join("", aws_autoscaling_group.default.*.name)
+  autoscaling_group_name = join("", aws_autoscaling_group.this.*.name)
 }
 
 locals {
@@ -34,7 +34,7 @@ locals {
       statistic                 = var.cpu_utilization_high_statistic
       threshold                 = var.cpu_utilization_high_threshold_percent
       dimensions_name           = "AutoScalingGroupName"
-      dimensions_target         = join("", aws_autoscaling_group.default.*.name)
+      dimensions_target         = join("", aws_autoscaling_group.this.*.name)
       alarm_description         = "Scale up if CPU utilization is above ${var.cpu_utilization_high_threshold_percent} for ${var.cpu_utilization_high_period_seconds} seconds"
       alarm_actions             = [join("", aws_autoscaling_policy.scale_up.*.arn)]
       treat_missing_data        = "missing"
@@ -52,7 +52,7 @@ locals {
       statistic                 = var.cpu_utilization_low_statistic
       threshold                 = var.cpu_utilization_low_threshold_percent
       dimensions_name           = "AutoScalingGroupName"
-      dimensions_target         = join("", aws_autoscaling_group.default.*.name)
+      dimensions_target         = join("", aws_autoscaling_group.this.*.name)
       alarm_description         = "Scale down if the CPU utilization is below ${var.cpu_utilization_low_threshold_percent} for ${var.cpu_utilization_low_period_seconds} seconds"
       alarm_actions             = [join("", aws_autoscaling_policy.scale_down.*.arn)]
       treat_missing_data        = "missing"
