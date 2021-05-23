@@ -232,6 +232,12 @@ variable "disable_api_termination" {
   default     = false
 }
 
+variable "autoscaling_policies_enabled" {
+  description = "Whether to create 'aws_autoscaling_policy' and 'aws_cloudwatch_metric_alarm' resources to control Auto Scaling"
+  type        = bool
+  default     = true
+}
+
 variable "scale_up_cooldown_seconds" {
   description = "The amount of time, in seconds, after a scaling activity completes and before the next scaling activity can start"
   type        = number
