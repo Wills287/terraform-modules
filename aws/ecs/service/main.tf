@@ -1,23 +1,21 @@
 module "metadata" {
   source = "git::https://github.com/Wills287/terraform-modules//aws/general/metadata?ref=v0.0.11"
 
-  enabled = var.enabled
-  namespace = var.namespace
+  enabled     = var.enabled
+  namespace   = var.namespace
   environment = var.environment
-  name = var.name
-  service = var.service
-  delimiter = var.delimiter
-  attributes = var.attributes
-  tags = var.tags
+  name        = var.name
+  service     = var.service
+  delimiter   = var.delimiter
+  attributes  = var.attributes
+  tags        = var.tags
 }
 
 resource "aws_ecs_service" "this" {
   name            = module.metadata.id
   cluster         = var.ecs_cluster_id
-  task_definition = module.aws_ecs_task_definition.this.arn
+  task_definition = aws_ecs_task_definition.this.arn
   desired_count   = var.desired_count
-  iam_role        = aws_iam_role.foo.arn
-  depends_on      = [aws_iam_role_policy.foo]
 }
 
 resource "aws_ecs_task_definition" "this" {
