@@ -62,7 +62,7 @@ locals {
   }
 
   default_alarms = var.autoscaling_policies_enabled && var.default_alarms_enabled ? local.default_ec2_alarms : {}
-  all_alarms     = module.metadata.enabled ? merge(local.default_alarms, var.custom_alarms) : {}
+  all_alarms     = var.enabled ? merge(local.default_alarms, var.custom_alarms) : {}
 }
 
 resource "aws_cloudwatch_metric_alarm" "all_alarms" {
