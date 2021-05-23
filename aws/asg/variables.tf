@@ -334,6 +334,26 @@ variable "cpu_utilization_low_statistic" {
   default     = "Average"
 }
 
+variable "mixed_instances_policy" {
+  description = "Policy to use mixed groups of on demand/spot of differing types. Launch template is automatically generated. https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html#mixed_instances_policy-1"
+
+  type = object({
+    instances_distribution = object({
+      on_demand_allocation_strategy            = string
+      on_demand_base_capacity                  = number
+      on_demand_percentage_above_base_capacity = number
+      spot_allocation_strategy                 = string
+      spot_instance_pools                      = number
+      spot_max_price                           = string
+    })
+    override = list(object({
+      instance_type     = string
+      weighted_capacity = number
+    }))
+  })
+  default = null
+}
+
 variable "tag_specifications_resource_types" {
   description = "List of tag specification resource types to tag. Valid values are 'instance', 'volume', 'elastic-gpu' and 'spot-instances-request'"
   type        = set(string)

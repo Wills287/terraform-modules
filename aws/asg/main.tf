@@ -1,14 +1,14 @@
 module "metadata" {
   source = "git::https://github.com/Wills287/terraform-modules//aws/general/metadata?ref=v0.0.11"
 
-  enabled = var.enabled
-  namespace = var.namespace
+  enabled     = var.enabled
+  namespace   = var.namespace
   environment = var.environment
-  name = var.name
-  service = var.service
-  delimiter = var.delimiter
-  attributes = var.attributes
-  tags = var.tags
+  name        = var.name
+  service     = var.service
+  delimiter   = var.delimiter
+  attributes  = var.attributes
+  tags        = var.tags
 }
 
 resource "aws_launch_template" "this" {
@@ -64,9 +64,7 @@ locals {
     id      = join("", aws_launch_template.this.*.id)
     version = var.launch_template_version != "" ? var.launch_template_version : join("", aws_launch_template.this.*.latest_version)
   }
-  launch_template = (
-    var.mixed_instances_policy == null ? local.launch_template_block
-  : null)
+  launch_template = (var.mixed_instances_policy == null ? local.launch_template_block : null)
   mixed_instances_policy = (
     var.mixed_instances_policy == null ? null : {
       instances_distribution = var.mixed_instances_policy.instances_distribution

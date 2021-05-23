@@ -1,5 +1,5 @@
 locals {
-  autoscaling_enabled = module.metadata.enabled && var.autoscaling_policies_enabled ? true : false
+  autoscaling_enabled = var.enabled && var.autoscaling_policies_enabled ? true : false
 }
 
 resource "aws_autoscaling_policy" "scale_up" {
