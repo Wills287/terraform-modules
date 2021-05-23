@@ -61,6 +61,11 @@ variable "tags" {
   REQUIRED VARIABLES
 --------------------------------------------------------------------------------------------------------------------- */
 
+variable "ecs_cluster_id" {
+  description = "Id of the associated ECS cluster"
+  type        = string
+}
+
 variable "container_image" {
   description = "Container image to deploy"
   type        = string
