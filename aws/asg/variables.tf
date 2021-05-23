@@ -11,50 +11,50 @@
 
 variable "enabled" {
   description = "Set to false to prevent the module from creating any resources"
-  type = bool
-  default = true
+  type        = bool
+  default     = true
 }
 
 variable "namespace" {
   description = "Namespace, which may relate to the overarching domain or specific business division"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "environment" {
   description = "Describes the environment, e.g. 'PROD', 'staging', 'u', 'dev'"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "name" {
   description = "Identifier for a specific application that may consist of many disparate resources"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "service" {
   description = "Describes an individual microservice running as part of a larger application"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "delimiter" {
   description = "Delimiter to output between 'namespace', 'environment', 'name', 'service' and 'attributes'"
-  type = string
-  default = "-"
+  type        = string
+  default     = "-"
 }
 
 variable "attributes" {
   description = "Any additional miscellaneous attributes to append to the identifier, e.g. 'cluster', 'worker'"
-  type = list(string)
-  default = []
+  type        = list(string)
+  default     = []
 }
 
 variable "tags" {
   description = "Additional tags to apply, e.g. '{Owner = 'ABC', Product = 'DEF'}'"
-  type = map(string)
-  default = {}
+  type        = map(string)
+  default     = {}
 }
 
 /* ---------------------------------------------------------------------------------------------------------------------
@@ -335,38 +335,37 @@ variable "cpu_utilization_low_statistic" {
 }
 
 variable "wait_for_capacity_timeout" {
-  type        = string
   description = "A maximum duration that Terraform should wait for ASG instances to be healthy before timing out. Setting this to '0' causes Terraform to skip all Capacity Waiting behavior"
+  type        = string
   default     = "10m"
 }
 
 variable "min_elb_capacity" {
-  type        = number
   description = "Setting this causes Terraform to wait for this number of instances to show up healthy in the ELB only on creation. Updates will not wait on ELB instance number changes"
+  type        = number
   default     = 0
 }
 
 variable "wait_for_elb_capacity" {
-  type        = number
   description = "Setting this will cause Terraform to wait for exactly this number of healthy instances in all attached load balancers on both create and update operations. Takes precedence over `min_elb_capacity` behavior"
+  type        = number
   default     = 0
 }
 
 variable "protect_from_scale_in" {
-  type        = bool
   description = "Allows setting instance protection. The autoscaling group will not select instances with this setting for terminination during scale in events"
+  type        = bool
   default     = false
 }
 
 variable "service_linked_role_arn" {
-  type        = string
   description = "The ARN of the service-linked role that the ASG will use to call other AWS services"
+  type        = string
   default     = ""
 }
 
 variable "mixed_instances_policy" {
   description = "Policy to use mixed groups of on demand/spot of differing types. Launch template is automatically generated. https://www.terraform.io/docs/providers/aws/r/autoscaling_group.html#mixed_instances_policy-1"
-
   type = object({
     instances_distribution = object({
       on_demand_allocation_strategy            = string
@@ -388,4 +387,32 @@ variable "tag_specifications_resource_types" {
   description = "List of tag specification resource types to tag. Valid values are 'instance', 'volume', 'elastic-gpu' and 'spot-instances-request'"
   type        = set(string)
   default     = ["instance", "volume"]
+}
+
+variable "default_alarms_enabled" {
+  description = "Enable or disable cpu and memory Cloudwatch alarms"
+  type        = bool
+  default     = true
+}
+
+variable "custom_alarms" {
+  description = "Map of custom CloudWatch alarms configurations"
+  type = map(object({
+    alarm_name                = string
+    comparison_operator       = string
+    evaluation_periods        = string
+    metric_name               = string
+    namespace                 = string
+    period                    = string
+    statistic                 = string
+    threshold                 = string
+    treat_missing_data        = string
+    ok_actions                = list(string)
+    insufficient_data_actions = list(string)
+    dimensions_name           = string
+    dimensions_target         = string
+    alarm_description         = string
+    alarm_actions             = list(string)
+  }))
+  default = {}
 }
