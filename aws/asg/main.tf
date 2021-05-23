@@ -12,7 +12,7 @@ module "metadata" {
 }
 
 resource "aws_launch_template" "this" {
-  count = module.metadata.enabled ? 1 : 0
+  count = var.enabled ? 1 : 0
 
   name_prefix = format("%s%s", module.metadata.id, module.metadata.delimiter)
 
@@ -41,12 +41,6 @@ resource "aws_launch_template" "this" {
     associate_public_ip_address = var.associate_public_ip_address
     delete_on_termination       = true
     security_groups             = var.security_group_ids
-  }
-
-  metadata_options {
-    http_endpoint               = (var.metadata_http_endpoint_enabled) ? "enabled" : "disabled"
-    http_put_response_hop_limit = var.metadata_http_put_response_hop_limit
-    http_tokens                 = (var.metadata_http_tokens_required) ? "required" : "optional"
   }
 
   dynamic "tag_specifications" {
@@ -82,7 +76,7 @@ locals {
 }
 
 resource "aws_autoscaling_group" "this" {
-  count = module.metadata.enabled ? 1 : 0
+  count = var.enabled ? 1 : 0
 
   name_prefix               = format("%s%s", module.metadata.id, module.metadata.delimiter)
   vpc_zone_identifier       = var.subnet_ids
