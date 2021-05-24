@@ -11,6 +11,11 @@ module "metadata" {
   tags        = var.tags
 }
 
+resource "aws_autoscaling_attachment" "asg_attachment_bar" {
+  autoscaling_group_name = var.asg_id
+  alb_target_group_arn   = aws_alb_target_group.this.arn
+}
+
 resource "aws_alb_target_group" "this" {
   name                 = "${module.metadata.id}-tg"
   port                 = 80

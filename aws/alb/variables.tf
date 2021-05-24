@@ -71,6 +71,11 @@ variable "public_subnet_ids" {
   type        = list(string)
 }
 
+variable "asg_id" {
+  description = "The id of the autoscaling group to attach as a target"
+  type        = string
+}
+
 /* ---------------------------------------------------------------------------------------------------------------------
   OPTIONAL VARIABLES
 --------------------------------------------------------------------------------------------------------------------- */
