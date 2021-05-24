@@ -100,7 +100,7 @@ resource "aws_route_table" "public" {
 resource "aws_route" "public" {
   count = local.public_count
   route_table_id = element(aws_route_table.public.*.id, count.index)
-  gateway_id = data.aws_internet_gateway.igw.id
+  gateway_id = var.igw_id
   destination_cidr_block = "0.0.0.0/0"
   depends_on = [
     aws_route_table.public

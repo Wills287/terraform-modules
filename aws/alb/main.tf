@@ -24,7 +24,7 @@ resource "aws_alb_target_group" "this" {
 resource "aws_alb" "this" {
   name            = module.metadata.id
   subnets         = var.public_subnet_ids
-  security_groups = ["${aws_security_group.this.id}"]
+  security_groups = [aws_security_group.this.id]
 
   tags = module.metadata.tags
 }
